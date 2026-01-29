@@ -24,18 +24,26 @@
         </div>
 
         <div v-else class="edit-mode">
-          <div class="input-group">
-            <label>NOUVEAU PSEUDO</label>
-            <input v-model="editForm.pseudo" type="text" />
-          </div>
-          <div class="input-group">
-            <label>NOUVEAU MOT DE PASSE</label>
-            <input v-model="editForm.password" type="password" />
-          </div>
-          <div class="action-group">
-            <button @click="saveChanges" class="save-btn" :disabled="!isFormValid">VALIDER</button>
-            <button @click="isEditing = false" class="cancel-btn">ANNULER</button>
-          </div>
+          <Form @submit="saveChanges" :validation-schema="validationSchema" v-slot="{ errors, isSubmitting }">
+            <div class="input-group">
+              <label>NOUVEAU PSEUDO</label>
+              <Field name="pseudo" v-slot="{ field }" as="input" type="text" />
+              <input v-bind="field" type="text" :value="editForm.pseudo" @input="editForm.pseudo = $event.target.value" />
+              <p v-if="errors.pseudo" class="field-error">{{ errors.pseudo }}</p>
+            </div>
+            
+            <div class="input-group">
+              <label>NOUVEAU MOT DE PASSE</label>
+              <Field name="password" v-slot="{ field }" as="input" type="password" />
+              <input v-bind="field" type="password" :value="editForm.password" @input="editForm.password = $event.target.value" />
+              <p v-if="errors.password" class="field-error">{{ errors.password }}</p>
+            </div>
+            
+            <div class="action-group">
+              <button type="submit" class="save-btn" :disabled="isSubmitting">{{ isSubmitting ? 'Enregistrement...' : 'VALIDER' }}</button>
+              <button type="button" @click="isEditing = false" class="cancel-btn">ANNULER</button>
+            </div>
+          </Form>
         </div>
       </div>
 
@@ -74,6 +82,8 @@
 
 <script setup>
 import { ref, computed, reactive } from 'vue'
+import { Form, Field } from 'vee-validate'
+import * as yup from 'yup'
 import { useAccount } from '../composables/useAccount'
 import champions from '../datas/champions'
 
@@ -82,16 +92,25 @@ const { user, logout, toggleFavorite, updateAccount } = useAccount()
 const isEditing = ref(false)
 const editForm = reactive({ pseudo: '', password: '' })
 
+const validationSchema = yup.object({
+  pseudo: yup.string()
+    .min(3, 'Le pseudo doit avoir au moins 3 caractères')
+    .max(20, 'Le pseudo ne doit pas dépasser 20 caractères')
+    .required('Le pseudo est requis'),
+  password: yup.string()
+    .min(4, 'Le mot de passe doit avoir au moins 4 caractères')
+    .max(50, 'Le mot de passe ne doit pas dépasser 50 caractères')
+    .required('Le mot de passe est requis')
+})
+
 const startEditing = () => {
   editForm.pseudo = user.value.pseudo
   editForm.password = user.value.password
   isEditing.value = true
 }
 
-const isFormValid = computed(() => editForm.pseudo.length >= 3 && editForm.password.length >= 4)
-
-const saveChanges = () => {
-  updateAccount(editForm.pseudo, editForm.password)
+const saveChanges = (values) => {
+  updateAccount(values.pseudo, values.password)
   isEditing.value = false
 }
 
@@ -141,8 +160,9 @@ const mainRole = computed(() => {
 
 .input-group label { display: block; font-size: 0.7rem; color: #7c3aed; font-weight: bold; margin-bottom: 5px; }
 .input-group input { width: 100%; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); padding: 12px; border-radius: 10px; color: white; outline: none; }
+.field-error { color: #ef4444; font-size: 0.75rem; margin-top: 5px; font-weight: bold; }
 
-.analysis-section { }
+
 .analysis-card { background: rgba(11, 16, 32, 0.6); padding: 25px; border-radius: 20px; margin-bottom: 40px; }
 .highlight { color: #a855f7; font-weight: 900; text-transform: uppercase; }
 .role-bars { margin-top: 20px; display: flex; flex-direction: column; gap: 12px; }
@@ -152,7 +172,6 @@ const mainRole = computed(() => {
 .progress-fill { height: 100%; background: #7c3aed; transition: width 1s ease; }
 
 .section-title { font-size: 1rem; color: #f1f5f9; margin-bottom: 20px; border-left: 4px solid #7c3aed; padding-left: 15px; }
-.favorites-section { }
 .fav-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; }
 .fav-item { background: rgba(15, 23, 42, 0.6); border-radius: 15px; padding: 10px; display: flex; align-items: center; gap: 12px; border: 1px solid rgba(255,255,255,0.05); }
 .fav-icon { width: 45px; height: 45px; border-radius: 8px; object-fit: cover; }
