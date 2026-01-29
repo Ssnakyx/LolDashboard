@@ -1,10 +1,22 @@
-# Nuxt Minimal Starter
+# 🎮 LolDashboard
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Un tableau de bord moderne et performant pour League of Legends, conçu avec **Nuxt 4**, **Nuxt UI**, et **TypeScript**. Ce projet permet d'explorer les champions, de comparer leurs statistiques et d'analyser les performances des joueurs.
 
-## Setup
+## 🌟 Fonctionnalités
 
-Make sure to install dependencies:
+Le projet propose une expérience complète divisée en plusieurs modules clés :
+
+* **Gestion de Compte & Authentification** : Système de connexion sécurisé pour accéder aux données personnalisées de l'invocateur.
+* **Exploration des Champions** : Une vue d'ensemble de tous les champions avec un système de recherche par nom et filtrage par rôle.
+* **Comparaison de Champions** : Outil permettant de sélectionner deux champions pour comparer leurs statistiques de base (santé, attaque, défense, etc.) côte à côte.
+* **Tableau de Bord de Statistiques** : Visualisation des performances globales et des statistiques de jeu.
+* **Profil Utilisateur Multilingue** : 
+    * Analyse détaillée du profil de l'invocateur.
+    * Support complet du **Français** et de l'**Anglais** avec changement de langue instantané.
+
+## 🚀 Installation
+
+Assurez-vous d'installer les dépendances avant de lancer le projet :
 
 ```bash
 # npm
@@ -13,63 +25,11 @@ npm install
 # pnpm
 pnpm install
 
-# yarn
-yarn install
-
-# bun
-bun install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
 ```bash
-# npm
+# npm Lancer le projet avec 
 npm run dev
 
-# pnpm
-pnpm dev
+Acceder au site avec `http://localhost:3000`:
 
-# yarn
-yarn dev
 
-# bun
-bun run dev
-```
 
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
