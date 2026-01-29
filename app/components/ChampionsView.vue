@@ -1,16 +1,16 @@
 <template>
   <div class="view-container">
     <header class="main-header">
-      <h1 class="glow-text">CHAMPIONS</h1>
+      <h1 class="glow-text">{{ $t('champions.title') }}</h1>
       <GlobalStats :champions="champions" />
       <div class="filter-section">
-        <input v-model="searchQuery" type="text" placeholder="Rechercher..." class="search-input" />
+        <input v-model="searchQuery" type="text" :placeholder="$t('champions.search')" class="search-input" />
         <div class="roles-filters">
-          <button v-for="role in allRoles" :key="role" @click="selectedRole = role" :class="['role-btn', { active: selectedRole === role }]">
-            {{ role }}
+          <button v-for="(displayed, idx) in displayedRoles" :key="realRoles[idx]" @click="selectedRole = realRoles[idx]" :class="['role-btn', { active: selectedRole === realRoles[idx] }]">
+            {{ displayed }}
           </button>
           <button @click="showOnlyFavs = !showOnlyFavs" :class="['role-btn fav-filter', { active: showOnlyFavs }]">
-            ❤️ FAVORIS
+            {{ $t('champions.favorites') }}
           </button>
         </div>
       </div>
@@ -22,8 +22,8 @@
         <ChampionCard v-for="champ in filteredChampions" :key="champ.id" :champion="champ" @click="$emit('select', champ)" />
       </div>
       <div v-else class="no-results">
-        <p>Aucun champion trouvé</p>
-        <button @click="resetFilters" class="reset-btn">Réinitialiser</button>
+        <p>{{ $t('champions.noResults') }}</p>
+        <button @click="resetFilters" class="reset-btn">{{ $t('champions.resetFilters') }}</button>
       </div>
     </main>
   </div>
@@ -35,21 +35,40 @@ import champions from '../datas/champions';
 import { useAccount } from '../composables/useAccount';
 
 const { user } = useAccount();
+const { t } = useI18n();
+
 const searchQuery = ref('');
-const selectedRole = ref('Tous');
+const selectedRole = ref('All');
 const showOnlyFavs = ref(false);
-const allRoles = ['Tous', 'Fighter', 'Mage', 'Assassin', 'Tank', 'Marksman', 'Support'];
+const realRoles = ['All', 'Fighter', 'Mage', 'Assassin', 'Tank', 'Marksman', 'Support'];
+
+const roleMapping = {
+  'All': 'All',
+  'Fighter': 'Fighter',
+  'Mage': 'Mage',
+  'Assassin': 'Assassin',
+  'Tank': 'Tank',
+  'Marksman': 'Marksman',
+  'Support': 'Support'
+};
+
+const displayedRoles = computed(() => {
+  return realRoles.map(role => {
+    if (role === 'All') return t('stats.roleFilter');
+    return t(`roles.${role.toLowerCase()}`) || role;
+  });
+});
 
 const filteredChampions = computed(() => {
   return champions.filter(champ => {
     const matchesSearch = champ.name.toLowerCase().includes(searchQuery.value.toLowerCase());
-    const matchesRole = selectedRole.value === 'Tous' || champ.tags.includes(selectedRole.value);
+    const matchesRole = selectedRole.value === 'All' || champ.tags.includes(selectedRole.value);
     const matchesFav = !showOnlyFavs.value || user.value.favorites.includes(champ.id);
     return matchesSearch && matchesRole && matchesFav;
   });
 });
 
-const resetFilters = () => { searchQuery.value = ''; selectedRole.value = 'Tous'; showOnlyFavs.value = false; };
+const resetFilters = () => { searchQuery.value = ''; selectedRole.value = 'All'; showOnlyFavs.value = false; };
 defineEmits(['select']);
 </script>
 

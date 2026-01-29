@@ -96,8 +96,6 @@ const saveChanges = () => {
 }
 
 const handleLogout = () => { if (confirm("Se déconnecter ?")) logout() }
-
-// Logique pour les favoris et l'analyse
 const favoriteChampions = computed(() => champions.filter(c => user.value.favorites.includes(c.id)))
 
 const roleDistribution = computed(() => {
@@ -117,7 +115,6 @@ const mainRole = computed(() => {
 </script>
 
 <style scoped>
-/* STYLES EXISTANTS */
 .profile-page { display: flex; justify-content: center; padding: 40px 20px; }
 .profile-container { width: 100%; max-width: 700px; }
 .profile-header { text-align: center; margin-bottom: 30px; }
@@ -129,7 +126,6 @@ const mainRole = computed(() => {
 .user-info { display: flex; align-items: center; gap: 20px; }
 .avatar-circle { width: 60px; height: 60px; background: #7c3aed; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 900; color: white; }
 
-/* STYLE DE LA DATE D'INSCRIPTION */
 .joined-date {
   color: #94a3b8;
   font-size: 0.85rem;

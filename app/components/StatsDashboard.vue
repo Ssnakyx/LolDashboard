@@ -1,13 +1,13 @@
 <template>
   <div class="dashboard-page">
     <header class="dashboard-header">
-      <h2 class="title italic">RECORDS PAR CATÉGORIE</h2>
+      <h2 class="title italic">{{ $t('stats.title') }}</h2>
       
       <div class="class-selector">
         <button 
-          v-for="role in roles" 
+          v-for="role in displayedRoles" 
           :key="role" 
-          @click="selectedRole = role"
+          @click="selectRole(role)"
           :class="['role-tab', { active: selectedRole === role }]"
         >
           {{ role }}
@@ -21,7 +21,7 @@
         
         <div class="comparison-cards">
           <div class="record-card strongest">
-            <div class="badge">MAX {{ selectedRole !== 'Tous' ? selectedRole : '' }}</div>
+            <div class="badge">MAX {{ selectedRole !== 'All' ? selectedRole : '' }}</div>
             <img :src="getRecord(stat.key, 'max').icon" class="champ-mini" />
             <div class="details">
               <span class="champ-name">{{ getRecord(stat.key, 'max').name }}</span>
@@ -30,7 +30,7 @@
           </div>
 
           <div class="record-card weakest">
-            <div class="badge">MIN {{ selectedRole !== 'Tous' ? selectedRole : '' }}</div>
+            <div class="badge">MIN {{ selectedRole !== 'All' ? selectedRole : '' }}</div>
             <img :src="getRecord(stat.key, 'min').icon" class="champ-mini" />
             <div class="details">
               <span class="champ-name">{{ getRecord(stat.key, 'min').name }}</span>
@@ -47,20 +47,34 @@
 import { ref, computed } from 'vue'
 import champions from '../datas/champions'
 
-const selectedRole = ref('Tous')
-const roles = ['Tous', 'Fighter', 'Mage', 'Assassin', 'Tank', 'Marksman', 'Support']
+const { t } = useI18n()
 
-const statsToAnalyze = [
-  { label: 'Points de Vie', key: 'hp' },
-  { label: 'Dégâts d\'Attaque', key: 'attackdamage' },
-  { label: 'Armure', key: 'armor' },
-  { label: 'Résistance Magique', key: 'spellblock' },
-  { label: 'Vitesse de Déplacement', key: 'movespeed' },
-  { label: 'Portée de Tir', key: 'attackrange' }
-]
+const selectedRole = ref('All')
+const realRoles = ['All', 'Fighter', 'Mage', 'Assassin', 'Tank', 'Marksman', 'Support']
+
+const displayedRoles = computed(() => {
+  return realRoles.map(role => {
+    if (role === 'All') return t('stats.roleFilter');
+    return t(`roles.${role.toLowerCase()}`) || role;
+  });
+})
+
+const selectRole = (displayedRole) => {
+  const index = displayedRoles.value.indexOf(displayedRole);
+  selectedRole.value = realRoles[index];
+}
+
+const statsToAnalyze = computed(() => [
+  { label: t('championStats.hp'), key: 'hp' },
+  { label: t('championStats.attackDamage'), key: 'attackdamage' },
+  { label: t('championStats.armor'), key: 'armor' },
+  { label: t('championStats.spellBlock'), key: 'spellblock' },
+  { label: t('championStats.movementSpeed'), key: 'movespeed' },
+  { label: t('championStats.attackRange'), key: 'attackrange' }
+])
 
 const filteredList = computed(() => {
-  if (selectedRole.value === 'Tous') return champions
+  if (selectedRole.value === 'All') return champions
   return champions.filter(c => c.tags.includes(selectedRole.value))
 })
 

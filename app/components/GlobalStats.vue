@@ -1,17 +1,17 @@
 <template>
   <div class="stats-dashboard">
     <div class="stat-card">
-      <span class="stat-label">CHAMPIONS</span>
+      <span class="stat-label">{{ $t('global.champions') }}</span>
       <span class="stat-value">{{ totalCount }}</span>
     </div>
 
     <div class="stat-card">
-      <span class="stat-label">AD MOYEN</span>
+      <span class="stat-label">{{ $t('global.avgAD') }}</span>
       <span class="stat-value">{{ avgAD }}</span>
     </div>
 
     <div class="stat-card highlight">
-      <span class="stat-label">LE PLUS ROBUSTE (HP)</span>
+      <span class="stat-label">{{ $t('global.tankiest') }}</span>
       <div class="best-champ" v-if="tankiest">
         <img :src="tankiest.icon" alt="" />
         <span>{{ tankiest.name }} ({{ tankiest.stats.hp }})</span>
@@ -19,7 +19,7 @@
     </div>
 
     <div class="stat-card highlight">
-      <span class="stat-label">LE PLUS PUISSANT (AD)</span>
+      <span class="stat-label">{{ $t('global.strongest') }}</span>
       <div class="best-champ" v-if="strongest">
         <img :src="strongest.icon" alt="" />
         <span>{{ strongest.name }} ({{ strongest.stats.attackdamage }})</span>

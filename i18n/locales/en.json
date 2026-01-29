@@ -18,5 +18,50 @@
     "title": "MY FAVORITES",
     "remove": "Remove",
     "empty": "No favorite champions."
+  },
+  "champions": {
+    "title": "CHAMPIONS",
+    "search": "Search...",
+    "all": "All",
+    "favorites": "❤️ FAVORITES",
+    "noResults": "No champion found",
+    "resetFilters": "Reset"
+  },
+  "stats": {
+    "title": "Dashboard",
+    "totalChampions": "Champions",
+    "avgAD": "Average AD",
+    "tankiest": "Tankiest (HP)",
+    "strongest": "Strongest (AD)",
+    "roleStats": "Role Stats",
+    "roleFilter": "All"
+  },
+  "roles": {
+    "fighter": "Fighter",
+    "mage": "Mage",
+    "assassin": "Assassin",
+    "tank": "Tank",
+    "marksman": "Marksman",
+    "support": "Support"
+  },
+  "championStats": {
+    "baseStats": "Base Statistics",
+    "hp": "Health Points",
+    "mp": "Mana / Energy",
+    "attackDamage": "Attack Damage",
+    "attackSpeed": "Attack Speed",
+    "armor": "Armor",
+    "spellBlock": "Magic Resist",
+    "movementSpeed": "Movement Speed",
+    "attackRange": "Attack Range",
+    "hpRegen": "HP Regen",
+    "mpRegen": "Mana Regen",
+    "critChance": "Crit Chance"
+  },
+  "global": {
+    "champions": "CHAMPIONS",
+    "avgAD": "AVG AD",
+    "tankiest": "TANKIEST (HP)",
+    "strongest": "STRONGEST (AD)"
   }
 }

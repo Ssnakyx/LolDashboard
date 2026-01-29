@@ -5,19 +5,19 @@
         @click="$emit('changeView', 'champions')" 
         :class="['nav-item', { active: currentView === 'champions' }]"
       >
-        Champions
+        {{ $t('nav.champions') }}
       </button>
       <button 
         @click="$emit('changeView', 'dashboard')" 
         :class="['nav-item', { active: currentView === 'dashboard' }]"
       >
-         Stats
+        {{ $t('nav.dashboard') }}
       </button>
       <button 
         @click="$emit('changeView', 'profile')" 
         :class="['nav-item', { active: currentView === 'profile' }]"
       >
-         Compte
+        {{ $t('nav.profile') }}
       </button>
     </div>
   </nav>

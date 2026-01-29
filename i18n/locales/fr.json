@@ -18,5 +18,50 @@
     "title": "MES FAVORIS",
     "remove": "Retirer",
     "empty": "Aucun champion favori."
+  },
+  "champions": {
+    "title": "CHAMPIONS",
+    "search": "Rechercher...",
+    "all": "Tous",
+    "favorites": "❤️ FAVORIS",
+    "noResults": "Aucun champion trouvé",
+    "resetFilters": "Réinitialiser"
+  },
+  "stats": {
+    "title": "Tableau de bord",
+    "totalChampions": "Champions",
+    "avgAD": "Dégâts moyens",
+    "tankiest": "Le plus robuste (PV)",
+    "strongest": "Le plus puissant (AD)",
+    "roleStats": "Statistiques par rôle",
+    "roleFilter": "Tous"
+  },
+  "roles": {
+    "fighter": "Combattant",
+    "mage": "Mage",
+    "assassin": "Assassin",
+    "tank": "Tank",
+    "marksman": "Tireur",
+    "support": "Support"
+  },
+  "championStats": {
+    "baseStats": "Statistiques de base",
+    "hp": "Points de Vie",
+    "mp": "Mana / Énergie",
+    "attackDamage": "Dégâts d'Attaque",
+    "attackSpeed": "Vitesse d'Attaque",
+    "armor": "Armure",
+    "spellBlock": "Résistance Magique",
+    "movementSpeed": "Vitesse de Déplacement",
+    "attackRange": "Portée de Tir",
+    "hpRegen": "Régénération PV",
+    "mpRegen": "Régénération Mana",
+    "critChance": "Chance de Coup Critique"
+  },
+  "global": {
+    "champions": "CHAMPIONS",
+    "avgAD": "AD MOYEN",
+    "tankiest": "LE PLUS ROBUSTE (PV)",
+    "strongest": "LE PLUS PUISSANT (AD)"
   }
 }
