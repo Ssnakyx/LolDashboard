@@ -26,7 +26,8 @@ npm install
 pnpm install
 
 ```bash
-# npm Lancer le projet avec 
+# npm Lancer le projet avec
+
 npm run dev
 
 Acceder au site avec `http://localhost:3000`:
