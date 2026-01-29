@@ -4,6 +4,7 @@ const user = ref({
   pseudo: '',
   password: '',
   favorites: [],
+  joinedAt: '', 
   isLoggedIn: false
 })
 
@@ -21,7 +22,16 @@ export const useAccount = () => {
     const accounts = JSON.parse(localStorage.getItem('all_accounts') || '{}')
 
     if (!accounts[pseudo]) {
-      accounts[pseudo] = { pseudo, password, favorites: [] }
+      accounts[pseudo] = { 
+        pseudo, 
+        password, 
+        favorites: [],
+        joinedAt: new Date().toLocaleDateString('fr-FR', { 
+          day: 'numeric', 
+          month: 'long', 
+          year: 'numeric' 
+        }) 
+      }
       localStorage.setItem('all_accounts', JSON.stringify(accounts))
     } 
     
@@ -47,7 +57,8 @@ export const useAccount = () => {
     accounts[newPseudo] = { 
       pseudo: newPseudo, 
       password: newPassword, 
-      favorites: user.value.favorites 
+      favorites: user.value.favorites,
+      joinedAt: user.value.joinedAt 
     }
 
     localStorage.setItem('all_accounts', JSON.stringify(accounts))
@@ -71,9 +82,10 @@ export const useAccount = () => {
   }
 
   const logout = () => {
-    user.value = { pseudo: '', password: '', favorites: [], isLoggedIn: false }
+    user.value = { pseudo: '', password: '', favorites: [], joinedAt: '', isLoggedIn: false }
     localStorage.removeItem('current_session')
   }
+
   const saveSession = () => {
     localStorage.setItem('current_session', JSON.stringify(user.value))
   }

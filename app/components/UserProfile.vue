@@ -12,6 +12,9 @@
             <div class="avatar-circle">{{ user.pseudo.charAt(0).toUpperCase() }}</div>
             <div class="user-text">
               <h3>{{ user.pseudo }}</h3>
+              <p class="joined-date">
+                Compte crée le {{ user.joinedAt || 'récemment' }}
+              </p>
             </div>
           </div>
           <div class="action-group">
@@ -37,13 +40,15 @@
       </div>
 
       <div v-if="favoriteChampions.length > 0" class="analysis-section">
-        <h3 class="section-title">Role Favorie</h3>
+        <h3 class="section-title">Analyse du Style</h3>
         <div class="analysis-card">
-          <p>Role : <span class="highlight">{{ mainRole }}</span></p>
+          <p>Rôle de prédilection : <span class="highlight">{{ mainRole }}</span></p>
           <div class="role-bars">
             <div v-for="(count, role) in roleDistribution" :key="role" class="role-row">
               <span class="role-name">{{ role }}</span>
-              <div class="progress-bg"><div class="progress-fill" :style="{ width: (count / favoriteChampions.length * 100) + '%' }"></div></div>
+              <div class="progress-bg">
+                <div class="progress-fill" :style="{ width: (count / favoriteChampions.length * 100) + '%' }"></div>
+              </div>
               <span class="role-count">{{ count }}</span>
             </div>
           </div>
@@ -92,12 +97,19 @@ const saveChanges = () => {
 
 const handleLogout = () => { if (confirm("Se déconnecter ?")) logout() }
 
+// Logique pour les favoris et l'analyse
 const favoriteChampions = computed(() => champions.filter(c => user.value.favorites.includes(c.id)))
+
 const roleDistribution = computed(() => {
   const counts = {}
-  favoriteChampions.value.forEach(c => c.tags.forEach(t => counts[t] = (counts[t] || 0) + 1))
+  favoriteChampions.value.forEach(c => {
+    c.tags.forEach(t => {
+      counts[t] = (counts[t] || 0) + 1
+    })
+  })
   return counts
 })
+
 const mainRole = computed(() => {
   const roles = roleDistribution.value
   return Object.keys(roles).length ? Object.keys(roles).reduce((a, b) => roles[a] > roles[b] ? a : b) : "Inconnu"
@@ -105,6 +117,7 @@ const mainRole = computed(() => {
 </script>
 
 <style scoped>
+/* STYLES EXISTANTS */
 .profile-page { display: flex; justify-content: center; padding: 40px 20px; }
 .profile-container { width: 100%; max-width: 700px; }
 .profile-header { text-align: center; margin-bottom: 30px; }
@@ -115,12 +128,20 @@ const mainRole = computed(() => {
 .view-mode, .edit-mode { display: flex; flex-direction: column; gap: 20px; }
 .user-info { display: flex; align-items: center; gap: 20px; }
 .avatar-circle { width: 60px; height: 60px; background: #7c3aed; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 900; color: white; }
-.status-tag { font-size: 0.7rem; color: #22c55e; font-weight: bold; text-transform: uppercase; }
+
+/* STYLE DE LA DATE D'INSCRIPTION */
+.joined-date {
+  color: #94a3b8;
+  font-size: 0.85rem;
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
 
 .action-group { display: flex; gap: 10px; }
 .edit-btn, .save-btn { flex: 1; background: #7c3aed; color: white; border: none; padding: 12px; border-radius: 12px; font-weight: bold; cursor: pointer; }
 .logout-btn, .cancel-btn { flex: 1; background: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; color: #ef4444; padding: 12px; border-radius: 12px; cursor: pointer; font-weight: bold; }
-.save-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
 .input-group label { display: block; font-size: 0.7rem; color: #7c3aed; font-weight: bold; margin-bottom: 5px; }
 .input-group input { width: 100%; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); padding: 12px; border-radius: 10px; color: white; outline: none; }
