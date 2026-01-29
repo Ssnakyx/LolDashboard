@@ -1,0 +1,22 @@
+{
+  "compare": "COMPARE",
+  "login": "Login",
+  "search": "Search champion",
+  "language": "Language",
+  "nav": {
+    "champions": "Champions",
+    "dashboard": "Dashboard",
+    "profile": "Profile"
+  },
+  "profile": {
+    "settings": "Account Settings",
+    "language": "Site Language",
+    "logout": "Logout",
+    "edit": "Edit"
+  },
+  "favorites": {
+    "title": "MY FAVORITES",
+    "remove": "Remove",
+    "empty": "No favorite champions."
+  }
+}

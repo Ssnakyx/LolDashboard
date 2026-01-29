@@ -1,0 +1,22 @@
+{
+  "compare": "COMPARER",
+  "login": "Connexion",
+  "search": "Rechercher un champion",
+  "language": "Langue",
+  "nav": {
+    "champions": "Champions",
+    "dashboard": "Tableau de bord",
+    "profile": "Profil"
+  },
+  "profile": {
+    "settings": "Paramètres du compte",
+    "language": "Langue du site",
+    "logout": "Se déconnecter",
+    "edit": "Modifier"
+  },
+  "favorites": {
+    "title": "MES FAVORIS",
+    "remove": "Retirer",
+    "empty": "Aucun champion favori."
+  }
+}

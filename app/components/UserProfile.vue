@@ -2,8 +2,8 @@
   <div class="profile-page">
     <div class="profile-container">
       <header class="profile-header">
-        <h2 class="title italic">PROFIL</h2>
-        <p class="subtitle">Gestion du compte</p>
+        <h2 class="title italic">{{ $t('nav.profile') }}</h2>
+        <p class="subtitle">{{ $t('profile.settings') }}</p>
       </header>
 
       <div class="profile-card">
@@ -18,8 +18,8 @@
             </div>
           </div>
           <div class="action-group">
-            <button @click="startEditing" class="edit-btn"> MODIFIER</button>
-            <button @click="handleLogout" class="logout-btn">DÉCONNEXION</button>
+            <button @click="startEditing" class="edit-btn">{{ $t('profile.edit') || 'MODIFIER'}}</button>
+            <button @click="handleLogout" class="logout-btn">{{ $t('profile.logout') }}</button>
           </div>
         </div>
 
@@ -56,17 +56,17 @@
       </div>
 
       <div class="favorites-section">
-        <h3 class="section-title">❤️ MES FAVORIS ({{ favoriteChampions.length }})</h3>
+        <h3 class="section-title">❤️ {{ $t('favorites.title') || 'MES FAVORIS' }} ({{ favoriteChampions.length }})</h3>
         <div v-if="favoriteChampions.length > 0" class="fav-grid">
           <div v-for="champ in favoriteChampions" :key="champ.id" class="fav-item">
             <img :src="champ.icon" class="fav-icon" />
             <div class="fav-info">
               <span class="fav-name">{{ champ.name }}</span>
-              <button @click="toggleFavorite(champ.id)" class="remove-btn">Retirer</button>
+              <button @click="toggleFavorite(champ.id)" class="remove-btn">{{ $t('favorites.remove') || 'Retirer'}}</button>
             </div>
           </div>
         </div>
-        <div v-else class="empty-fav">Aucun champion favori.</div>
+        <div v-else class="empty-fav">{{ $t('favorites.empty') || 'Aucun champion favori.'}}</div>
       </div>
     </div>
   </div>
@@ -146,6 +146,7 @@ const mainRole = computed(() => {
 .input-group label { display: block; font-size: 0.7rem; color: #7c3aed; font-weight: bold; margin-bottom: 5px; }
 .input-group input { width: 100%; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); padding: 12px; border-radius: 10px; color: white; outline: none; }
 
+.analysis-section { }
 .analysis-card { background: rgba(11, 16, 32, 0.6); padding: 25px; border-radius: 20px; margin-bottom: 40px; }
 .highlight { color: #a855f7; font-weight: 900; text-transform: uppercase; }
 .role-bars { margin-top: 20px; display: flex; flex-direction: column; gap: 12px; }
@@ -155,8 +156,12 @@ const mainRole = computed(() => {
 .progress-fill { height: 100%; background: #7c3aed; transition: width 1s ease; }
 
 .section-title { font-size: 1rem; color: #f1f5f9; margin-bottom: 20px; border-left: 4px solid #7c3aed; padding-left: 15px; }
+.favorites-section { }
 .fav-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; }
 .fav-item { background: rgba(15, 23, 42, 0.6); border-radius: 15px; padding: 10px; display: flex; align-items: center; gap: 12px; border: 1px solid rgba(255,255,255,0.05); }
 .fav-icon { width: 45px; height: 45px; border-radius: 8px; object-fit: cover; }
-.remove-btn { background: none; border: none; color: #ef4444; font-size: 0.7rem; cursor: pointer; font-weight: bold; }
+.fav-info { display: flex; flex-direction: column; gap: 8px; flex: 1; }
+.fav-name { color: #f1f5f9; font-size: 0.9rem; font-weight: 600; }
+.remove-btn { background: none; border: none; color: #ef4444; font-size: 0.7rem; cursor: pointer; font-weight: bold; text-align: left; }
+.empty-fav { color: #94a3b8; text-align: center; padding: 40px 20px; }
 </style>

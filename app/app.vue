@@ -2,6 +2,10 @@
   <div class="app-container">
     <div class="bg-gradient"></div>
 
+    <div class="header-top">
+      <LanguageSwitcher />
+    </div>
+
     <Transition name="fade">
       <LoginView v-if="!user.isLoggedIn" />
     </Transition>
@@ -13,7 +17,7 @@
       />
 
       <Transition name="page" mode="out-in">
-        <div :key="currentView">
+        <div :key="currentView" class="view-content">
           <ChampionsView 
             v-if="currentView === 'champions'" 
             @select="selectedChampion = $event" 
@@ -30,7 +34,7 @@
       <Transition name="fade">
         <div v-if="selectedCompareIds.length === 2" class="compare-fab">
           <button @click="showComparisonScreen = true">
-            ⚔️ COMPARER ({{ selectedCompareIds.length }}/2)
+            ⚔️ {{ $t('compare') }} ({{ selectedCompareIds.length }}/2)
           </button>
           <button class="clear-btn" @click="clearComparison">❌</button>
         </div>
@@ -62,12 +66,6 @@ import { useAccount } from './composables/useAccount';
 import { useComparison } from './composables/useComparison';
 import champions from './datas/champions';
 
-import LoginView from './components/LoginView.vue';
-import MainNavigation from './components/MainNavigation.vue';
-import ChampionsView from './components/ChampionsView.vue';
-import StatsDashboard from './components/StatsDashboard.vue';
-import UserProfile from './components/UserProfile.vue';
-
 const { user } = useAccount();
 const { selectedCompareIds, clearComparison } = useComparison();
 
@@ -85,14 +83,26 @@ const getChamp = (id) => champions.find(c => c.id === id);
   font-family: 'Inter', sans-serif;
   position: relative;
   padding: 20px;
-  overflow-x: hidden;
+}
+
+.header-top {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  pointer-events: auto;
 }
 
 .bg-gradient {
   position: fixed;
   inset: 0;
   background: radial-gradient(circle at 50% 50%, #111827 0%, #030712 100%);
-  z-index: -1;
+  z-index: -1; 
+}
+
+.view-content {
+  position: relative;
+  z-index: 10;
 }
 
 .compare-fab {
@@ -123,18 +133,11 @@ const getChamp = (id) => champions.find(c => c.id === id);
 .clear-btn {
   border-left: 1px solid rgba(255, 255, 255, 0.3) !important;
   padding-left: 15px !important;
-  font-size: 1rem !important;
 }
 
-.page-enter-active, .page-leave-active {
-  transition: opacity 0.2s ease, transform 0.2s ease;
-}
+.page-enter-active, .page-leave-active { transition: opacity 0.2s ease, transform 0.2s ease; }
 .page-enter-from { opacity: 0; transform: translateY(10px); }
 .page-leave-to { opacity: 0; transform: translateY(-10px); }
-
-.modal-anim-enter-active, .modal-anim-leave-active { transition: all 0.3s ease; }
-.modal-anim-enter-from, .modal-anim-leave-to { opacity: 0; transform: scale(0.95); }
-
 .fade-enter-active, .fade-leave-active { transition: opacity 0.4s ease; }
 .fade-enter-from, .fade-leave-to { opacity: 0; }
 </style>
