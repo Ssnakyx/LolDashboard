@@ -30,7 +30,7 @@ pnpm install
 
 npm run dev
 
-Acceder au site avec `http://localhost:3000`:
+Acceder au site avec `http://localhost:3001`:
 
 
 
